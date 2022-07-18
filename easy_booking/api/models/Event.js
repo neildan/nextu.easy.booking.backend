@@ -1,14 +1,14 @@
 module.exports = {
-  tableName: 'users',
+  tableName: 'events',
   attributes: {
-    username: {
+    name: {
       type: 'string',
       required: true
     },
-    password: {
-      type: 'string',
+    url_image: {
+      type: 'text',
       required: true
     }
-  },
+  }
 };
 

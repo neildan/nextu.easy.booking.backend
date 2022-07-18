@@ -1,14 +1,14 @@
 module.exports = {
-  tableName: 'users',
+  tableName: 'theater_halls',
   attributes: {
-    username: {
+    theater: {
       type: 'string',
       required: true
     },
-    password: {
-      type: 'string',
+    amount_chairs: {
+      type: 'int',
       required: true
     }
-  },
+  }
 };
 

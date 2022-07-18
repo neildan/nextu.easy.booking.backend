@@ -1,4 +1,7 @@
 const { success, error } = require("../trait")
+const bcrypt = require('bcryptjs')
+const jwt = require('jwt-simple')
+const moment = require('moment')
 
 module.exports = {
     get: async function (req, res) {
@@ -24,7 +27,9 @@ module.exports = {
     },
     create: async function (req, res) {
         try {
-            await User.create(req.allParams());
+            let data = req.allParams();
+            data.password = bcrypt.hashSync(data.password, 10);
+            await User.create(data);
             res.json(success())
         } catch (err) {
             sails.log.debug(err)
@@ -33,7 +38,11 @@ module.exports = {
     },
     update: async function (req, res) {
         try {
-            await User.update(req.param('id'), req.allParams());
+            let data = req.allParams();
+            if (data.password) {
+                data.password = bcrypt.hashSync(data.password, 10);
+            }
+            await User.update(req.param('id'), data);
             res.json(success())
         } catch (err) {
             sails.log.debug(err)
@@ -44,6 +53,31 @@ module.exports = {
         try {
             await User.destroy(req.param('id'));
             res.json(success())
+        } catch (err) {
+            sails.log.debug(err)
+            res.json(error(null, err))
+        }
+    },
+    auth: async function (req, res) {
+        try {
+            let data = req.allParams();
+            let user = await User.find({
+                where: { username: data.username }
+            });
+            if(
+                !user ||
+                parseInt(user.length) === 0 ||
+                !user[0] ||
+                user[0] == undefined
+            ) throw 'El username es incorrecto'
+            user = user[0];
+            if (!bcrypt.compareSync(data.password, user.password)) throw 'Contraseña incorrecta'
+            let token = jwt.encode({
+                userId: user.id,
+                createAt: moment().unix(),
+                expireAt: moment().add(8, 'hours').unix()
+            }, 'nextusecret')
+            res.json(success(token))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
