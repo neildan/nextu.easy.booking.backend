@@ -35,7 +35,7 @@ COMMENT = 'Contiene todos los eventos que se desarrollan en las salas de teatro'
 
 CREATE TABLE `easy_booking`.`funtions` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `hour` TIME NOT NULL,
+  `hour` VARCHAR(255) NOT NULL,
   `event_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `event_id_idx` (`event_id` ASC) VISIBLE,
