@@ -3,7 +3,7 @@ const { success, error } = require("../trait")
 module.exports = {
     get: async function (req, res) {
         try {
-            const events = await TheEvent.find();
+            const events = await TheEvent.find().populateAll();
             if (!events || events.length == 0) throw 'No hay eventos';
             res.json(success(events))
         } catch (err) {
