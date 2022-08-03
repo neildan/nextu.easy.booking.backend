@@ -14,7 +14,7 @@ module.exports = {
     detail: async function (req, res) {
         try {
             let id = req.param('id');
-            const event = await TheEvent.find(id);
+            const event = await TheEvent.find(id).populateAll();
             if (!event || event.length == 0) throw 'No hay evento con ID: ' + id;
             res.json(success(event[0]))
         } catch (err) {
