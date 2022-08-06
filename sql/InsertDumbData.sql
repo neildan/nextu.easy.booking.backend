@@ -25,22 +25,22 @@ INSERT INTO `easy_booking`.`events`
 `url_image`,
 `theater_hall_id`)
 VALUES
-('Romeo y Julieta', 'ruta', 1),
-('Hamlet', 'ruta', 2),
-('La Celestina', 'ruta', 3),
-('La vida es sueño', 'ruta', 4),
-('Don Juan Tenorio', 'ruta', 1),
-('La casa de Bernarda Alba', 'ruta', 2),
-('Fuenteovejuna', 'ruta', 3),
-('El sueño de una noche de verano', 'ruta', 4),
-('Edipo rey', 'ruta', 1),
-('Bodas de sangre', 'ruta', 2),
-('El enfermo imaginario', 'ruta', 3),
-('Un tranvía llamado Deseo', 'ruta', 4),
-('Casa de muñecas', 'ruta', 1),
-('El alcalde de Zalamea', 'ruta', 2),
-('Macbeth', 'ruta', 3),
-('El jardín de los cerezos', 'ruta', 4);
+('Romeo y Julieta', 'img-1.jpg', 1),
+('Hamlet', 'img-2.jpg', 2),
+('La Celestina', 'img-3.jpg', 3),
+('La vida es sueño', 'img-4.jpg', 4),
+('Don Juan Tenorio', 'img-5.jpg', 1),
+('La casa de Bernarda Alba', 'img-6.jpg', 2),
+('Fuenteovejuna', 'img-7.jpg', 3),
+('El sueño de una noche de verano', 'img-8.jpg', 4),
+('Edipo rey', 'img-9.jpg', 1),
+('Bodas de sangre', 'img-10.jpg', 2),
+('El enfermo imaginario', 'img-11.jpg', 3),
+('Un tranvía llamado Deseo', 'img-12.jpg', 4),
+('Casa de muñecas', 'img-13.jpg', 1),
+('El alcalde de Zalamea', 'img-14.jpg', 2),
+('Macbeth', 'img-15.jpg', 3),
+('El jardín de los cerezos', 'img-16.jpg', 4);
 
 INSERT INTO `easy_booking`.`funtions`
 (`hour`,

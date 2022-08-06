@@ -13,6 +13,20 @@ module.exports = {
       collection: 'spectatorFunction',
       via: 'function_id'
     }
+  },
+  beforeDestroy: async function (criteria, cb) {
+    const functionModel = await TheFunction.find(criteria).populate('spectatorFunction')
+    if (!functionModel || functionModel.length == 0) return cb(false);
+    functionModel.forEach(async function (beforeDestroyE) {
+      await SpectatorFunction.destroy({
+        id: {
+          in: beforeDestroyE.spectatorFunction.map((rel) => {
+            return rel.id
+          })
+        }
+      });
+    });
+    cb();
   }
 };
 

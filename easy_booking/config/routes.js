@@ -1,6 +1,7 @@
 module.exports.routes = {
   // User
   'POST /api/login': 'UserController.auth',
+  'POST /api/checkAdmin': 'UserController.checkAdmin',
   'GET /api/users': 'UserController.get',
   'GET /api/users/:id': 'UserController.detail',
   'POST /api/users': 'UserController.create',

@@ -62,7 +62,7 @@ module.exports = {
             let user = await User.find({
                 where: { username: data.username }
             });
-            if(
+            if (
                 !user ||
                 parseInt(user.length) === 0 ||
                 !user[0] ||
@@ -80,6 +80,15 @@ module.exports = {
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
+        }
+    },
+    checkAdmin: async function (req, res) {
+        let data = req.allParams()
+        try {
+            if (!data || data.token.trim() != storage.getItem('token').trim()) throw false;
+            res.json(success())
+        } catch (e) {
+            res.json(error(null))
         }
     }
 };
