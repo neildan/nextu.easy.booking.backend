@@ -2,6 +2,7 @@ const { success, error } = require("../trait")
 const bcrypt = require('bcryptjs')
 const jwt = require('jwt-simple')
 const moment = require('moment')
+const storage = require('node-sessionstorage')
 
 module.exports = {
     get: async function (req, res) {
@@ -29,8 +30,7 @@ module.exports = {
         try {
             let data = req.allParams();
             data.password = bcrypt.hashSync(data.password, 10);
-            await User.create(data);
-            res.json(success())
+            res.json(success(await User.create(data).fetch()))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
@@ -42,8 +42,7 @@ module.exports = {
             if (data.password) {
                 data.password = bcrypt.hashSync(data.password, 10);
             }
-            await User.update(req.param('id'), data);
-            res.json(success())
+            res.json(success(await User.update(req.param('id'), data).fetch()))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
@@ -51,8 +50,7 @@ module.exports = {
     },
     delete: async function (req, res) {
         try {
-            await User.destroy(req.param('id'));
-            res.json(success())
+            res.json(success(await User.destroy(req.param('id')).fetch()))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
@@ -77,6 +75,7 @@ module.exports = {
                 createAt: moment().unix(),
                 expireAt: moment().add(8, 'hours').unix()
             }, 'nextusecret')
+            storage.setItem('token', token)
             res.json(success(token))
         } catch (err) {
             sails.log.debug(err)

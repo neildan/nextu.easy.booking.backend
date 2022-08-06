@@ -24,9 +24,7 @@ module.exports = {
     },
     create: async function (req, res) {
         try {
-            let data = req.allParams();
-            await TheEvent.create(data);
-            res.json(success())
+            res.json(success(await TheEvent.create(req.allParams()).fetch()))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
@@ -34,9 +32,7 @@ module.exports = {
     },
     update: async function (req, res) {
         try {
-            let data = req.allParams();
-            await TheEvent.update(req.param('id'), data);
-            res.json(success())
+            res.json(success(await TheEvent.update(req.param('id'), req.allParams()).fetch()))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
@@ -44,8 +40,7 @@ module.exports = {
     },
     delete: async function (req, res) {
         try {
-            await TheEvent.destroy(req.param('id'));
-            res.json(success())
+            res.json(success(await TheEvent.destroy(req.param('id')).fetch()))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))

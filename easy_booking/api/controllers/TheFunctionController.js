@@ -3,7 +3,7 @@ const { success, error } = require("../trait")
 module.exports = {
     get: async function (req, res) {
         try {
-            const functions = await TheFunction.find();
+            const functions = await TheFunction.find().populateAll();
             if (!functions || functions.length == 0) throw 'No hay funciones';
             res.json(success(functions))
         } catch (err) {
@@ -24,9 +24,7 @@ module.exports = {
     },
     create: async function (req, res) {
         try {
-            let data = req.allParams();
-            await TheFunction.create(data);
-            res.json(success())
+            res.json(success(await TheFunction.create(req.allParams()).fetch()))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
@@ -34,9 +32,7 @@ module.exports = {
     },
     update: async function (req, res) {
         try {
-            let data = req.allParams();
-            await TheFunction.update(req.param('id'), data);
-            res.json(success())
+            res.json(success(await TheFunction.update(req.param('id'), req.allParams()).fetch()))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
@@ -44,8 +40,7 @@ module.exports = {
     },
     delete: async function (req, res) {
         try {
-            await TheFunction.destroy(req.param('id'));
-            res.json(success())
+            res.json(success(await TheFunction.destroy(req.param('id')).fetch()))
         } catch (err) {
             sails.log.debug(err)
             res.json(error(null, err))
